@@ -667,7 +667,7 @@
     <header>
         <div class="header-content">
             <div class="logo">
-                <a href="index.html" style="text-decoration: none; color: inherit;">
+                <a href="index.php" style="text-decoration: none; color: inherit;">
                     <h1>DIGITAL RP</h1>
                 </a>
             </div>
