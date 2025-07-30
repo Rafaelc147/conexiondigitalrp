@@ -686,8 +686,8 @@
             </a>
         </div>
 
-<div class="products-grid">
-    <?php include 'productos.php'; ?>
+<div class="products-grid" id="productos-container">
+    <!-- Los productos se cargarán aquí dinámicamente -->
 </div>
 
 
@@ -1003,6 +1003,14 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Cargar productos dinámicamente
+            fetch('productos.php')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('productos-container').innerHTML = data;
+                })
+                .catch(error => console.error('Error al cargar los productos:', error));
+
             const searchBar = document.getElementById('search-bar');
             if (searchBar) {
                 searchBar.addEventListener('input', (e) => {
