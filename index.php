@@ -673,12 +673,12 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="componentes.html">Componentes</a></li>
-                    <li><a href="audio.html">Audio</a></li>
-                    <li><a href="cableado.html">Cableado</a></li>
-                    <li><a href="gaming.html">Gaming</a></li>
-                    <li><a href="electronica.html">Electrónica</a></li>
-                    <li><a href="varios.html">Varios</a></li>
+                    <li><a href="componentes.php">Componentes</a></li>
+                    <li><a href="audio.php">Audio</a></li>
+                    <li><a href="cableado.php">Cableado</a></li>
+                    <li><a href="gaming.php">Gaming</a></li>
+                    <li><a href="electronica.php">Electrónica</a></li>
+                    <li><a href="varios.php">Varios</a></li>
                 </ul>
             </nav>
             <a href="#" class="cart-btn" onclick="toggleCart()">
@@ -709,41 +709,41 @@
         <div class="categories-container">
             <h2 class="section-title">Nuestras Categorías</h2>
             <div class="categories-grid">
-                <div class="category-card" onclick="window.location.href='componentes.html'">
+                <div class="category-card" onclick="window.location.href='componentes.php'">
                     <div class="category-icon">🖥️</div>
                     <h3>Componentes y Periféricos</h3>
                     <p>Mouses, teclados, monitores y más componentes esenciales</p>
-                    <a href="componentes.html" class="category-btn">Ver Productos</a>
+                    <a href="componentes.php" class="category-btn">Ver Productos</a>
                 </div>
-                <div class="category-card" onclick="window.location.href='audio.html'">
+                <div class="category-card" onclick="window.location.href='audio.php'">
                     <div class="category-icon">🎵</div>
                     <h3>Audio</h3>
                     <p>Audífonos, bocinas y equipos de sonido profesional</p>
-                    <a href="audio.html" class="category-btn">Ver Productos</a>
+                    <a href="audio.php" class="category-btn">Ver Productos</a>
                 </div>
-                <div class="category-card" onclick="window.location.href='cableado.html'">
+                <div class="category-card" onclick="window.location.href='cableado.php'">
                     <div class="category-icon">🔌</div>
                     <h3>Cableado</h3>
                     <p>Cables, adaptadores y accesorios de conectividad</p>
-                    <a href="cableado.html" class="category-btn">Ver Productos</a>
+                    <a href="cableado.php" class="category-btn">Ver Productos</a>
                 </div>
-                <div class="category-card" onclick="window.location.href='gaming.html'">
+                <div class="category-card" onclick="window.location.href='gaming.php'">
                     <div class="category-icon">🎮</div>
                     <h3>Gaming</h3>
                     <p>Sillas gamer, pantallas y accesorios para gamers</p>
-                    <a href="gaming.html" class="category-btn">Ver Productos</a>
+                    <a href="gaming.php" class="category-btn">Ver Productos</a>
                 </div>
-                <div class="category-card" onclick="window.location.href='electronica.html'">
+                <div class="category-card" onclick="window.location.href='electronica.php'">
                     <div class="category-icon">💡</div>
                     <h3>Electrónica</h3>
                     <p>Componentes y dispositivos electrónicos</p>
-                    <a href="electronica.html" class="category-btn">Ver Productos</a>
+                    <a href="electronica.php" class="category-btn">Ver Productos</a>
                 </div>
-                <div class="category-card" onclick="window.location.href='varios.html'">
+                <div class="category-card" onclick="window.location.href='varios.php'">
                     <div class="category-icon">📦</div>
                     <h3>Varios</h3>
                     <p>Productos y accesorios diversos</p>
-                    <a href="varios.html" class="category-btn">Ver Productos</a>
+                    <a href="varios.php" class="category-btn">Ver Productos</a>
                 </div>
             </div>
         </div>
@@ -1005,11 +1005,25 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Cargar productos dinámicamente
             fetch('productos.php')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('productos-container').innerHTML = data;
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('La respuesta de la red no fue correcta');
+                    }
+                    return response.text();
                 })
-                .catch(error => console.error('Error al cargar los productos:', error));
+                .then(data => {
+                    const container = document.getElementById('productos-container');
+                    if (container) {
+                        container.innerHTML = data;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar los productos:', error);
+                    const container = document.getElementById('productos-container');
+                    if (container) {
+                        container.innerHTML = '<p>Error al cargar los productos. Por favor, inténtelo de nuevo más tarde.</p>';
+                    }
+                });
 
             const searchBar = document.getElementById('search-bar');
             if (searchBar) {
