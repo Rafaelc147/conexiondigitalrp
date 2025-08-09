@@ -438,6 +438,118 @@ footer strong {
             cursor: pointer;
             font-size: 1rem;
         }
+        /* NUEVOS ESTILOS PARA EL CARRUSEL */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background: #f7f9fc;
+        }
+        
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+        
+        .carousel-slide {
+            min-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .carousel-slide img {
+            max-width: 80%;
+            max-height: 90%;
+            object-fit: contain;
+            padding: 10px;
+        }
+        
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+        
+        .carousel-btn {
+            background: rgba(102, 126, 234, 0.7);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+        
+        .carousel-btn:hover {
+            background: rgba(118, 75, 162, 0.9);
+            transform: scale(1.1);
+        }
+        
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 10;
+        }
+        
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.5);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-dot.active {
+            background: #667eea;
+            transform: scale(1.2);
+        }
+        
+        .carousel-thumbnails {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            gap: 5px;
+        }
+        
+        .carousel-thumb {
+            width: 50px;
+            height: 50px;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-thumb:hover, .carousel-thumb.active {
+            opacity: 1;
+            border-color: #667eea;
+        }
+        
+        .carousel-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
@@ -445,18 +557,18 @@ footer strong {
         <!-- Mismo header que la página principal -->
         <div class="header-content">
             <div class="logo">
-                <a href="index.html" style="text-decoration: none; color: inherit;">
+                <a href="index.php" style="text-decoration: none; color: inherit;">
                     <h1>DIGITAL RP</h1>
                 </a>
             </div>
             <nav>
                 <ul>
-                    <li><a href="componentes.html">Componentes</a></li>
-                    <li><a href="audio.html">Audio</a></li>
-                    <li><a href="cableado.html">Cableado</a></li>
-                    <li><a href="gaming.html">Gaming</a></li>
-                    <li><a href="electronica.html">Electrónica</a></li>
-                    <li><a href="varios.html">Varios</a></li>
+                    <li><a href="componentes.php">Componentes</a></li>
+                    <li><a href="audio.php">Audio</a></li>
+                    <li><a href="cableado.php">Cableado</a></li>
+                    <li><a href="gaming.php">Gaming</a></li>
+                    <li><a href="electronica.php">Electrónica</a></li>
+                    <li><a href="varios.php">Varios</a></li>
                 </ul>
             </nav>
             <a href="#" class="cart-btn" onclick="toggleCart()">
@@ -516,162 +628,339 @@ footer strong {
     </footer>
 
     <script>
-        // Datos de productos de audio (MODIFICA ESTOS CON TUS PRODUCTOS)
-        const productosAudio = [
-            { 
-                id: 1, 
-                nombre: "Audífonos Diadema Redragon H120", 
-                precio: 80000, 
-                imagen: "imagenes/AUDIO.png", 
-                descripcion: "Audífonos gamer con micrófono y sonido envolvente"
-            },
-            { 
-                id: 2, 
-                nombre: "Parlantes Genius 2.1 Bluetooth", 
-                precio: 285000, 
-                imagen: "imagenes/parlantes_genius.jpg", 
-                descripcion: "Sistema de parlantes 2.1 con conexión Bluetooth"
-            },
-            // Agrega más productos según tu imagen
-            { 
-                id: 3, 
-                nombre: "Audífonos Diadema Hawt H207U", 
-                precio: 165000, 
-                imagen: "imagenes/audifonos_hawt.jpg", 
-                descripcion: "Audífonos con diadema ajustable y micrófono"
-            },
-            { 
-                id: 4, 
-                nombre: "Parlante JBL Charge 5", 
-                precio: 725000, 
-                imagen: "imagenes/jbl_charge.jpg", 
-                descripcion: "Parlante portátil resistente al agua"
-            }
-        ];
+    // ===============================
+    // DATOS DE PRODUCTOS AUDIO
+    // ===============================
+    const productosAudio = [
+        { 
+            id: 1, 
+            nombre: "Parlante Portatil Recargable Tranyoo", 
+            precio: 80000, 
+            imagenes: [
+                "imagenes/audio/T-B16-3.jpeg",
+                "imagenes/audio/T-B16-4.jpeg",
+		"imagenes/audio/T-B16-2.jpeg",
+                "imagenes/audio/T-B16-1.jpeg",
+		"imagenes/audio/T-B16-5.jpeg",
+                "imagenes/audio/T-B16-6.jpeg",
+            ], 
+            descripcion: "Parlante Portatil Recargable Tranyoo"
+        },
+        { 
+            id: 2, 
+            nombre: "Auriculares Bluetooth con orejas de Gato", 
+            precio: 33000, 
+            imagenes: [
+                "imagenes/audio/EJ-S28PRO11.jpeg",
+                "imagenes/audio/EJ-S28PRO2.jpeg",
+                "imagenes/audio/EJ-S28PRO3.jpeg",
+		        "imagenes/audio/EJ-S28PRO4.jpeg",
+		        "imagenes/audio/EJ-S28PRO5.jpeg",
+		        "imagenes/audio/EJ-S28PRO6.jpeg",
+            ], 
+            descripcion: "Auriculares Bluetooth con orejas de Gato niña"
+        },
+        { 
+            id: 3, 
+            nombre: "Auriculares Bluetooth con orejas de Gato", 
+            precio: 33000, 
+            imagenes: [
+                "imagenes/audio/EJ-S28PRO11.jpeg",
+                "imagenes/audio/EJ-S28PRO2.jpeg",
+                "imagenes/audio/EJ-S28PRO3.jpeg",
+		        "imagenes/audio/EJ-S28PRO4.jpeg",
+		        "imagenes/audio/EJ-S28PRO5.jpeg",
+		        "imagenes/audio/EJ-S28PRO6.jpeg",
+            ], 
+            descripcion: "Auriculares Bluetooth con orejas de Gato niña"
+        }
+        ,
+        { 
+            id: 4, 
+            nombre: "Auriculares Bluetooth con orejas de Gato", 
+            precio: 33000, 
+            imagenes: [
+                "imagenes/audio/EJ-S28PRO11.jpeg",
+                "imagenes/audio/EJ-S28PRO2.jpeg",
+                "imagenes/audio/EJ-S28PRO3.jpeg",
+		        "imagenes/audio/EJ-S28PRO4.jpeg",
+		        "imagenes/audio/EJ-S28PRO5.jpeg",
+		        "imagenes/audio/EJ-S28PRO6.jpeg",
+            ], 
+            descripcion: "Auriculares Bluetooth con orejas de Gato niña"
+        }
+        ,
+        { 
+            id: 5, 
+            nombre: "Auriculares Bluetooth con orejas de Gato", 
+            precio: 33000, 
+            imagenes: [
+                "imagenes/audio/EJ-S28PRO11.jpeg",
+                "imagenes/audio/EJ-S28PRO2.jpeg",
+                "imagenes/audio/EJ-S28PRO3.jpeg",
+		        "imagenes/audio/EJ-S28PRO4.jpeg",
+		        "imagenes/audio/EJ-S28PRO5.jpeg",
+		        "imagenes/audio/EJ-S28PRO6.jpeg",
+            ], 
+            descripcion: "Auriculares Bluetooth con orejas de Gato niña"
+        }
+        ,
+        { 
+            id: 6, 
+            nombre: "Auriculares Bluetooth con orejas de Gato", 
+            precio: 33000, 
+            imagenes: [
+                "imagenes/audio/EJ-S28PRO11.jpeg",
+                "imagenes/audio/EJ-S28PRO2.jpeg",
+                "imagenes/audio/EJ-S28PRO3.jpeg",
+		        "imagenes/audio/EJ-S28PRO4.jpeg",
+		        "imagenes/audio/EJ-S28PRO5.jpeg",
+		        "imagenes/audio/EJ-S28PRO6.jpeg",
+            ], 
+            descripcion: "Auriculares Bluetooth con orejas de Gato niña"
+        }
+        ,
+        { 
+            id: 7, 
+            nombre: "Auriculares Bluetooth con orejas de Gato", 
+            precio: 33000, 
+            imagenes: [
+                "imagenes/audio/EJ-S28PRO11.jpeg",
+                "imagenes/audio/EJ-S28PRO2.jpeg",
+                "imagenes/audio/EJ-S28PRO3.jpeg",
+		        "imagenes/audio/EJ-S28PRO4.jpeg",
+		        "imagenes/audio/EJ-S28PRO5.jpeg",
+		        "imagenes/audio/EJ-S28PRO6.jpeg",
+            ], 
+            descripcion: "Auriculares Bluetooth con orejas de Gato niña"
+        }
+        ,
+        { 
+            id: 8, 
+            nombre: "Auriculares Bluetooth con orejas de Gato", 
+            precio: 33000, 
+            imagenes: [
+                "imagenes/audio/EJ-S28PRO11.jpeg",
+                "imagenes/audio/EJ-S28PRO2.jpeg",
+                "imagenes/audio/EJ-S28PRO3.jpeg",
+		        "imagenes/audio/EJ-S28PRO4.jpeg",
+		        "imagenes/audio/EJ-S28PRO5.jpeg",
+		        "imagenes/audio/EJ-S28PRO6.jpeg",
+            ], 
+            descripcion: "Auriculares Bluetooth con orejas de Gato niña"
+        }
+        ,
+        { 
+            id: 9, 
+            nombre: "Auriculares Bluetooth con orejas de Gato", 
+            precio: 33000, 
+            imagenes: [
+                "imagenes/audio/EJ-S28PRO11.jpeg",
+                "imagenes/audio/EJ-S28PRO2.jpeg",
+                "imagenes/audio/EJ-S28PRO3.jpeg",
+		        "imagenes/audio/EJ-S28PRO4.jpeg",
+		        "imagenes/audio/EJ-S28PRO5.jpeg",
+		        "imagenes/audio/EJ-S28PRO6.jpeg",
+            ], 
+            descripcion: "Auriculares Bluetooth con orejas de Gato niña"
+        }
+        ,
+        { 
+            id: 10, 
+            nombre: "Auriculares Bluetooth con orejas de Gato", 
+            precio: 33000, 
+            imagenes: [
+                "imagenes/audio/EJ-S28PRO11.jpeg",
+                "imagenes/audio/EJ-S28PRO2.jpeg",
+                "imagenes/audio/EJ-S28PRO3.jpeg",
+		        "imagenes/audio/EJ-S28PRO4.jpeg",
+		        "imagenes/audio/EJ-S28PRO5.jpeg",
+		        "imagenes/audio/EJ-S28PRO6.jpeg",
+            ], 
+            descripcion: "Auriculares Bluetooth con orejas de Gato niña"
+        }
+        ,
+        { 
+            id: 11, 
+            nombre: "Auriculares Bluetooth con orejas de Gato", 
+            precio: 33000, 
+            imagenes: [
+                "imagenes/audio/EJ-S28PRO11.jpeg",
+                "imagenes/audio/EJ-S28PRO2.jpeg",
+                "imagenes/audio/EJ-S28PRO3.jpeg",
+		        "imagenes/audio/EJ-S28PRO4.jpeg",
+		        "imagenes/audio/EJ-S28PRO5.jpeg",
+		        "imagenes/audio/EJ-S28PRO6.jpeg",
+            ], 
+            descripcion: "Auriculares Bluetooth con orejas de Gato niña"
+        }
+        ,
+        { 
+            id: 12, 
+            nombre: "Auriculares Bluetooth con orejas de Gato", 
+            precio: 33000, 
+            imagenes: [
+                "imagenes/audio/EJ-S28PRO11.jpeg",
+                "imagenes/audio/EJ-S28PRO2.jpeg",
+                "imagenes/audio/EJ-S28PRO3.jpeg",
+		        "imagenes/audio/EJ-S28PRO4.jpeg",
+		        "imagenes/audio/EJ-S28PRO5.jpeg",
+		        "imagenes/audio/EJ-S28PRO6.jpeg",
+            ], 
+            descripcion: "Auriculares Bluetooth con orejas de Gato niña"
+        }
+        
+        // Puedes agregar más productos aquí...
+    ];
 
-        // Carrito de compras
-        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-
-        // Cargar productos de audio
-        function cargarProductosAudio() {
-            const container = document.getElementById('audio-products');
-            container.innerHTML = '';
-
-            productosAudio.forEach(producto => {
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card animate-fade-in';
-                productCard.innerHTML = `
-                    <div class="product-image">
-                        <img src="${producto.imagen}" alt="${producto.nombre}" 
+    // ===============================
+    // CREAR CARRUSEL
+    // ===============================
+    function createCarouselHTML(imagenes, productId) {
+        return `
+        <div class="carousel-container" id="carousel-${productId}">
+            <div class="carousel-slides">
+                ${imagenes.map((img, index) => `
+                    <div class="carousel-slide">
+                        <img src="${img}" alt="Imagen ${index+1}" 
                              onerror="this.src='imagenes/placeholder.jpg'">
                     </div>
-                    <div class="product-info">
-                        <h4>${producto.nombre}</h4>
-                        <p>${producto.descripcion}</p>
-                        <p class="product-price">$${producto.precio.toLocaleString()}</p>
-                        <button class="add-to-cart" onclick="agregarAlCarrito(${producto.id})">
-                            Agregar al Carrito
-                        </button>
+                `).join('')}
+            </div>
+            
+            <div class="carousel-nav">
+                <button class="carousel-btn prev-btn">&#10094;</button>
+                <button class="carousel-btn next-btn">&#10095;</button>
+            </div>
+            
+            <div class="carousel-dots">
+                ${imagenes.map((_, index) => `
+                    <div class="carousel-dot" data-index="${index}"></div>
+                `).join('')}
+            </div>
+            
+            <div class="carousel-thumbnails">
+                ${imagenes.map((img, index) => `
+                    <div class="carousel-thumb" data-index="${index}">
+                        <img src="${img}" alt="Miniatura ${index+1}">
                     </div>
-                `;
-                container.appendChild(productCard);
-            });
+                `).join('')}
+            </div>
+        </div>
+        `;
+    }
+
+    // ===============================
+    // INICIALIZAR CARRUSEL
+    // ===============================
+    function initCarousel(containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        
+        const slides = container.querySelector('.carousel-slides');
+        const slidesCount = container.querySelectorAll('.carousel-slide').length;
+        const dots = container.querySelectorAll('.carousel-dot');
+        const thumbs = container.querySelectorAll('.carousel-thumb');
+        const prevBtn = container.querySelector('.prev-btn');
+        const nextBtn = container.querySelector('.next-btn');
+        
+        let currentIndex = 0;
+        let autoSlideInterval;
+        
+        function goToSlide(index) {
+            if (index < 0) index = slidesCount - 1;
+            if (index >= slidesCount) index = 0;
+            slides.style.transform = `translateX(-${index * 100}%)`;
+            currentIndex = index;
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[index].classList.add('active');
+            thumbs.forEach(thumb => thumb.classList.remove('active'));
+            thumbs[index].classList.add('active');
         }
-
-        // Funciones del carrito (mismas que en la página principal)
-        function agregarAlCarrito(id) {
-            const producto = productosAudio.find(p => p.id === id);
-            if (producto) {
-                carrito.push(producto);
-                localStorage.setItem('carrito', JSON.stringify(carrito));
-                actualizarCarrito();
-                mostrarNotificacion('Producto agregado al carrito');
-            }
+        
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(() => {
+                goToSlide(currentIndex + 1);
+            }, 5000);
         }
-
-        function actualizarCarrito() {
-            const cartCount = document.getElementById('cart-count');
-            const cartItems = document.getElementById('cart-items');
-            const cartTotal = document.getElementById('cart-total');
-
-            cartCount.textContent = carrito.length;
-            cartItems.innerHTML = '';
-            
-            let total = 0;
-            carrito.forEach((item, index) => {
-                const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item';
-                cartItem.innerHTML = `
-                    <span>${item.nombre}</span>
-                    <span>$${item.precio.toLocaleString()}</span>
-                    <button onclick="eliminarDelCarrito(${index})">×</button>
-                `;
-                cartItems.appendChild(cartItem);
-                total += item.precio;
-            });
-
-            cartTotal.textContent = total.toLocaleString();
+        
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
         }
-
-        function eliminarDelCarrito(index) {
-            carrito.splice(index, 1);
-            localStorage.setItem('carrito', JSON.stringify(carrito));
-            actualizarCarrito();
-        }
-
-        function toggleCart() {
-            const cartModal = document.getElementById('cart-modal');
-            cartModal.style.display = cartModal.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function checkout() {
-            if (carrito.length === 0) {
-                alert('Tu carrito está vacío');
-                return;
-            }
-            
-            let mensaje = "Hola! Quiero comprar:%0A%0A";
-            let total = 0;
-            
-            carrito.forEach(item => {
-                mensaje += `• ${item.nombre} - $${item.precio.toLocaleString()}%0A`;
-                total += item.precio;
-            });
-            
-            mensaje += `%0ATotal: $${total.toLocaleString()}%0A%0AMi información:%0ANombre:%0ADirección:%0ATel:`;
-            window.open(`https://wa.me/573001234567?text=${mensaje}`, '_blank');
-        }
-
-        function mostrarNotificacion(mensaje) {
-            // Código de notificación igual al principal
-        }
-
-        // Inicializar
-        document.addEventListener('DOMContentLoaded', () => {
-            cargarProductosAudio();
-            actualizarCarrito();
+        
+        prevBtn.addEventListener('click', () => {
+            stopAutoSlide();
+            goToSlide(currentIndex - 1);
+            startAutoSlide();
         });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const searchBar = document.getElementById('search-bar');
-            if (searchBar) {
-                searchBar.addEventListener('input', (e) => {
-                    const searchTerm = e.target.value.toLowerCase();
-                    const productCards = document.querySelectorAll('.product-card');
-
-                    productCards.forEach(card => {
-                        const productName = card.querySelector('h4').textContent.toLowerCase();
-                        const productDescription = card.querySelector('p').textContent.toLowerCase();
-
-                        if (productName.includes(searchTerm) || productDescription.includes(searchTerm)) {
-                            card.style.display = 'flex';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                });
-            }
+        
+        nextBtn.addEventListener('click', () => {
+            stopAutoSlide();
+            goToSlide(currentIndex + 1);
+            startAutoSlide();
         });
-    </script>
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                stopAutoSlide();
+                goToSlide(index);
+                startAutoSlide();
+            });
+        });
+        
+        thumbs.forEach((thumb, index) => {
+            thumb.addEventListener('click', () => {
+                stopAutoSlide();
+                goToSlide(index);
+                startAutoSlide();
+            });
+        });
+        
+        startAutoSlide();
+        container.addEventListener('mouseenter', stopAutoSlide);
+        container.addEventListener('mouseleave', startAutoSlide);
+        goToSlide(0);
+    }
+
+    // ===============================
+    // CARGAR PRODUCTOS AUDIO
+    // ===============================
+    function cargarProductosAudio() {
+        const container = document.getElementById('audio-products');
+        container.innerHTML = '';
+        
+        productosAudio.forEach(producto => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card animate-fade-in';
+            productCard.innerHTML = `
+                <div class="product-image">
+                    ${createCarouselHTML(producto.imagenes, producto.id)}
+                </div>
+                <div class="product-info">
+                    <h4>${producto.nombre}</h4>
+                    <p>${producto.descripcion}</p>
+                    <p class="product-price">$${producto.precio.toLocaleString()}</p>
+                    <button class="add-to-cart" onclick="agregarAlCarrito(${producto.id})">
+                        Agregar al Carrito
+                    </button>
+                </div>
+            `;
+            container.appendChild(productCard);
+            setTimeout(() => initCarousel(`carousel-${producto.id}`), 100);
+        });
+    }
+
+    // ===============================
+    // INICIO AUTOMÁTICO AL CARGAR
+    // ===============================
+    window.addEventListener('DOMContentLoaded', cargarProductosAudio);
+
+    // ===============================
+    // FUNCIONES EXTRA (EJEMPLO)
+    // ===============================
+    function agregarAlCarrito(idProducto) {
+        alert(`Producto ${idProducto} agregado al carrito (aquí puedes poner la lógica real)`);
+    }
+</script>
 </body>
 </html>
