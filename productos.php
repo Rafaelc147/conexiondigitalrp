@@ -1,6 +1,5 @@
 <section class="featured">
     <div class="featured-container">
-        <h2 class="section-title">Productos de Audio</h2>
         <div class="products-grid" id="audio-products">
             <!-- Productos se cargarán aquí -->
         </div>

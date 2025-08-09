@@ -581,6 +581,7 @@ footer strong {
         </div>
     </header>
 
+    <h2 class="section-title">Productos Varios</h2>
     <?php include 'productos.php'; ?>
 
     <footer>
