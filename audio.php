@@ -564,7 +564,7 @@ footer strong {
             <nav>
                 <ul>
                     <li><a href="componentes.php">Componentes</a></li>
-                    <li><a href="audio.php">Audio</a></li>
+                    <li><a href="audio.php" class="active">Audio</a></li>
                     <li><a href="cableado.php">Cableado</a></li>
                     <li><a href="gaming.php">Gaming</a></li>
                     <li><a href="electronica.php">Electrónica</a></li>
