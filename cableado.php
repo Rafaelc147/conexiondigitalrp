@@ -513,6 +513,118 @@
             cursor: pointer;
             font-size: 1rem;
         }
+        /* NUEVOS ESTILOS PARA EL CARRUSEL */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background: #f7f9fc;
+        }
+
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-slide img {
+            max-width: 80%;
+            max-height: 90%;
+            object-fit: contain;
+            padding: 10px;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .carousel-btn {
+            background: rgba(102, 126, 234, 0.7);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(118, 75, 162, 0.9);
+            transform: scale(1.1);
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.5);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: #667eea;
+            transform: scale(1.2);
+        }
+
+        .carousel-thumbnails {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            gap: 5px;
+        }
+
+        .carousel-thumb {
+            width: 50px;
+            height: 50px;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-thumb:hover, .carousel-thumb.active {
+            opacity: 1;
+            border-color: #667eea;
+        }
+
+        .carousel-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
@@ -597,7 +709,7 @@
                 id: 1, 
                 nombre: "Cable HDMI 4K S M 2.0 Real", 
                 precio: 35000, 
-                imagen: "imagenes/cable1.jpg", 
+                imagenes: ["imagenes/cable1.jpg"],
                 descripcion: "Cable de Video HDMI 4K S M 2.0 Real de 60 MHz",
                 marca: "SIMBOS"
             },
@@ -605,7 +717,7 @@
                 id: 2, 
                 nombre: "Cable HDMI Premium 8K 6m", 
                 precio: 34000, 
-                imagen: "imagenes/cable2.jpg", 
+                imagenes: ["imagenes/cable2.jpg"],
                 descripcion: "Cable de Video HDMI Premium 8K 6m V 2.0",
                 marca: "AUTICIT"
             },
@@ -613,7 +725,7 @@
                 id: 3, 
                 nombre: "Cable HDMI Premium 8K 3m", 
                 precio: 34000, 
-                imagen: "imagenes/cable3.jpg", 
+                imagenes: ["imagenes/cable3.jpg"],
                 descripcion: "Cable de Video HDMI Premium 8K 3m V 2.0",
                 marca: "JATIEN"
             },
@@ -621,7 +733,7 @@
                 id: 4, 
                 nombre: "Cable HDMI Premium 4K 5m", 
                 precio: 27000, 
-                imagen: "imagenes/cable4.jpg", 
+                imagenes: ["imagenes/cable4.jpg"],
                 descripcion: "Cable de Video HDMI Premium 4K 5m V 2.0",
                 marca: "METICIT"
             },
@@ -629,7 +741,7 @@
                 id: 5, 
                 nombre: "Cable HDMI 4K 1.8m", 
                 precio: 24000, 
-                imagen: "imagenes/cable5.jpg", 
+                imagenes: ["imagenes/cable5.jpg"],
                 descripcion: "Cable de Video HDMI 4K 1.8m 2.0 Real de 60 MHz",
                 marca: "STADOAS",
                 nuevo: true
@@ -638,7 +750,7 @@
                 id: 6, 
                 nombre: "Cable HDMI Premium 4K 3m", 
                 precio: 16000, 
-                imagen: "imagenes/cable6.jpg", 
+                imagenes: ["imagenes/cable6.jpg"],
                 descripcion: "Cable de Video HDMI Premium 4K 3m V 2.0",
                 marca: "JATIEN"
             },
@@ -646,7 +758,7 @@
                 id: 7, 
                 nombre: "Cable HDMI 3m 2.0 Real", 
                 precio: 12000, 
-                imagen: "imagenes/cable7.jpg", 
+                imagenes: ["imagenes/cable7.jpg"],
                 descripcion: "Cable de Video HDMI 3m 2.0 Real de 60 MHz",
                 marca: "STADOAS"
             },
@@ -654,7 +766,7 @@
                 id: 8, 
                 nombre: "Cable HDMI 3m 2.0 Real", 
                 precio: 13000, 
-                imagen: "imagenes/cable8.jpg", 
+                imagenes: ["imagenes/cable8.jpg"],
                 descripcion: "Cable de Video HDMI 3m 2.0 Real de 60 MHz",
                 marca: "STADOAS"
             }
@@ -680,7 +792,7 @@
                 productCard.innerHTML = `
                     ${badge}
                     <div class="product-image">
-                        <img src="${producto.imagen}" alt="${producto.nombre}">
+                        ${createCarouselHTML(producto.imagenes, producto.id)}
                     </div>
                     <div class="product-info">
                         <div style="color: #667eea; font-weight: 600; margin-bottom: 8px;">${producto.marca}</div>
@@ -693,6 +805,7 @@
                     </div>
                 `;
                 container.appendChild(productCard);
+                setTimeout(() => initCarousel(`carousel-${producto.id}`), 100);
             });
         }
 

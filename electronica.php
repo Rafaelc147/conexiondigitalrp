@@ -494,6 +494,118 @@
             cursor: pointer;
             font-size: 1rem;
         }
+        /* NUEVOS ESTILOS PARA EL CARRUSEL */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background: #f7f9fc;
+        }
+
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-slide img {
+            max-width: 80%;
+            max-height: 90%;
+            object-fit: contain;
+            padding: 10px;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .carousel-btn {
+            background: rgba(102, 126, 234, 0.7);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(118, 75, 162, 0.9);
+            transform: scale(1.1);
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.5);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: #667eea;
+            transform: scale(1.2);
+        }
+
+        .carousel-thumbnails {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            gap: 5px;
+        }
+
+        .carousel-thumb {
+            width: 50px;
+            height: 50px;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-thumb:hover, .carousel-thumb.active {
+            opacity: 1;
+            border-color: #667eea;
+        }
+
+        .carousel-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
@@ -581,6 +693,115 @@
         // Carrito de compras
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
+        // ===============================
+        // CREAR CARRUSEL
+        // ===============================
+        function createCarouselHTML(imagenes, productId) {
+            return `
+            <div class="carousel-container" id="carousel-${productId}">
+                <div class="carousel-slides">
+                    ${imagenes.map((img, index) => `
+                        <div class="carousel-slide">
+                            <img src="${img}" alt="Imagen ${index+1}"
+                                 onerror="this.src='imagenes/placeholder.jpg'">
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="carousel-nav">
+                    <button class="carousel-btn prev-btn">&#10094;</button>
+                    <button class="carousel-btn next-btn">&#10095;</button>
+                </div>
+
+                <div class="carousel-dots">
+                    ${imagenes.map((_, index) => `
+                        <div class="carousel-dot" data-index="${index}"></div>
+                    `).join('')}
+                </div>
+
+                <div class="carousel-thumbnails">
+                    ${imagenes.map((img, index) => `
+                        <div class="carousel-thumb" data-index="${index}">
+                            <img src="${img}" alt="Miniatura ${index+1}">
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            `;
+        }
+
+        // ===============================
+        // INICIALIZAR CARRUSEL
+        // ===============================
+        function initCarousel(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const slides = container.querySelector('.carousel-slides');
+            const slidesCount = container.querySelectorAll('.carousel-slide').length;
+            const dots = container.querySelectorAll('.carousel-dot');
+            const thumbs = container.querySelectorAll('.carousel-thumb');
+            const prevBtn = container.querySelector('.prev-btn');
+            const nextBtn = container.querySelector('.next-btn');
+
+            let currentIndex = 0;
+            let autoSlideInterval;
+
+            function goToSlide(index) {
+                if (index < 0) index = slidesCount - 1;
+                if (index >= slidesCount) index = 0;
+                slides.style.transform = `translateX(-${index * 100}%)`;
+                currentIndex = index;
+                dots.forEach(dot => dot.classList.remove('active'));
+                dots[index].classList.add('active');
+                thumbs.forEach(thumb => thumb.classList.remove('active'));
+                thumbs[index].classList.add('active');
+            }
+
+            function startAutoSlide() {
+                autoSlideInterval = setInterval(() => {
+                    goToSlide(currentIndex + 1);
+                }, 5000);
+            }
+
+            function stopAutoSlide() {
+                clearInterval(autoSlideInterval);
+            }
+
+            prevBtn.addEventListener('click', () => {
+                stopAutoSlide();
+                goToSlide(currentIndex - 1);
+                startAutoSlide();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                stopAutoSlide();
+                goToSlide(currentIndex + 1);
+                startAutoSlide();
+            });
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    stopAutoSlide();
+                    goToSlide(index);
+                    startAutoSlide();
+                });
+            });
+
+            thumbs.forEach((thumb, index) => {
+                thumb.addEventListener('click', () => {
+                    stopAutoSlide();
+                    goToSlide(index);
+                    startAutoSlide();
+                });
+            });
+
+            startAutoSlide();
+            container.addEventListener('mouseenter', stopAutoSlide);
+            container.addEventListener('mouseleave', startAutoSlide);
+            goToSlide(0);
+        }
+
         // Cargar productos de electrónica
         function cargarProductosElectronica() {
             const container = document.getElementById('electronica-products');
@@ -597,7 +818,7 @@
                 productCard.innerHTML = `
                     <div class="product-brand">${producto.marca}</div>
                     <div class="product-image">
-                        <img src="${producto.imagen}" alt="${producto.nombre}">
+                        ${createCarouselHTML(producto.imagenes, producto.id)}
                     </div>
                     <div class="product-info">
                         <h4>${producto.nombre}</h4>
@@ -609,6 +830,7 @@
                     </div>
                 `;
                 container.appendChild(productCard);
+                setTimeout(() => initCarousel(`carousel-${producto.id}`), 100);
             });
         }
 

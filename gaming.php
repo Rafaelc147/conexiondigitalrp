@@ -681,6 +681,118 @@
             cursor: pointer;
             font-size: 1rem;
         }
+        /* NUEVOS ESTILOS PARA EL CARRUSEL */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background: #f7f9fc;
+        }
+
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-slide img {
+            max-width: 80%;
+            max-height: 90%;
+            object-fit: contain;
+            padding: 10px;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .carousel-btn {
+            background: rgba(102, 126, 234, 0.7);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(118, 75, 162, 0.9);
+            transform: scale(1.1);
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.5);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: #667eea;
+            transform: scale(1.2);
+        }
+
+        .carousel-thumbnails {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            gap: 5px;
+        }
+
+        .carousel-thumb {
+            width: 50px;
+            height: 50px;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-thumb:hover, .carousel-thumb.active {
+            opacity: 1;
+            border-color: #667eea;
+        }
+
+        .carousel-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -773,7 +885,7 @@
                 id: 1, 
                 nombre: "PlayStation 5", 
                 precio: 2200000, 
-                imagen: "imagenes/ps5.jpg", 
+                imagenes: ["imagenes/ps5.jpg"],
                 descripcion: "Consola de última generación con SSD ultrarrápido",
                 marca: "SONY",
                 nuevo: true
@@ -782,7 +894,7 @@
                 id: 2, 
                 nombre: "Xbox Series X", 
                 precio: 2100000, 
-                imagen: "imagenes/xbox.jpg", 
+                imagenes: ["imagenes/xbox.jpg"],
                 descripcion: "Potente consola con compatibilidad con 4K y 120 FPS",
                 marca: "MICROSOFT"
             },
@@ -790,7 +902,7 @@
                 id: 3, 
                 nombre: "Nintendo Switch OLED", 
                 precio: 1500000, 
-                imagen: "imagenes/switch.jpg", 
+                imagenes: ["imagenes/switch.jpg"],
                 descripcion: "Consola híbrida con pantalla OLED de 7 pulgadas",
                 marca: "NINTENDO"
             },
@@ -798,7 +910,7 @@
                 id: 4, 
                 nombre: "RTX 4090", 
                 precio: 8500000, 
-                imagen: "imagenes/rtx4090.jpg", 
+                imagenes: ["imagenes/rtx4090.jpg"],
                 descripcion: "Tarjeta gráfica más potente del mercado para gaming en 4K",
                 marca: "NVIDIA",
                 nuevo: true
@@ -807,7 +919,7 @@
                 id: 5, 
                 nombre: "Monitor Gamer 240Hz", 
                 precio: 1800000, 
-                imagen: "imagenes/monitor.jpg", 
+                imagenes: ["imagenes/monitor.jpg"],
                 descripcion: "Monitor curvo de 27 pulgadas con 240Hz y 1ms de respuesta",
                 marca: "SAMSUNG"
             },
@@ -815,7 +927,7 @@
                 id: 6, 
                 nombre: "Teclado Mecánico RGB", 
                 precio: 450000, 
-                imagen: "imagenes/teclado.jpg", 
+                imagenes: ["imagenes/teclado.jpg"],
                 descripcion: "Teclado mecánico con switches Cherry MX y RGB personalizable",
                 marca: "RAZER"
             },
@@ -823,7 +935,7 @@
                 id: 7, 
                 nombre: "Mouse Gamer Inalámbrico", 
                 precio: 350000, 
-                imagen: "imagenes/mouse.jpg", 
+                imagenes: ["imagenes/mouse.jpg"],
                 descripcion: "Mouse inalámbrico con sensor de 25K DPI y 70h de batería",
                 marca: "LOGITECH"
             },
@@ -831,7 +943,7 @@
                 id: 8, 
                 nombre: "Auriculares 7.1 Surround", 
                 precio: 550000, 
-                imagen: "imagenes/auriculares.jpg", 
+                imagenes: ["imagenes/auriculares.jpg"],
                 descripcion: "Auriculares con sonido envolvente 7.1 y micrófono retráctil",
                 marca: "STEELSERIES"
             },
@@ -839,7 +951,7 @@
                 id: 9, 
                 nombre: "Silla Gamer Ergonómica", 
                 precio: 1200000, 
-                imagen: "imagenes/silla.jpg", 
+                imagenes: ["imagenes/silla.jpg"],
                 descripcion: "Silla ergonómica con soporte lumbar y reposacabezas ajustable",
                 marca: "COOLER MASTER"
             },
@@ -847,7 +959,7 @@
                 id: 10, 
                 nombre: "Volante Gamer Force Feedback", 
                 precio: 1800000, 
-                imagen: "imagenes/volante.jpg", 
+                imagenes: ["imagenes/volante.jpg"],
                 descripcion: "Volante con force feedback 900° y pedales metálicos",
                 marca: "LOGITECH"
             }
@@ -874,7 +986,7 @@
                     ${badge}
                     <div class="gaming-tag">GAMING</div>
                     <div class="product-image">
-                        <img src="${producto.imagen}" alt="${producto.nombre}">
+                        ${createCarouselHTML(producto.imagenes, producto.id)}
                     </div>
                     <div class="product-info">
                         <div class="product-brand">${producto.marca}</div>
@@ -887,6 +999,7 @@
                     </div>
                 `;
                 container.appendChild(productCard);
+                setTimeout(() => initCarousel(`carousel-${producto.id}`), 100);
             });
         }
 

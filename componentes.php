@@ -494,6 +494,118 @@
             cursor: pointer;
             font-size: 1rem;
         }
+        /* NUEVOS ESTILOS PARA EL CARRUSEL */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background: #f7f9fc;
+        }
+
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-slide img {
+            max-width: 80%;
+            max-height: 90%;
+            object-fit: contain;
+            padding: 10px;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .carousel-btn {
+            background: rgba(102, 126, 234, 0.7);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(118, 75, 162, 0.9);
+            transform: scale(1.1);
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.5);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: #667eea;
+            transform: scale(1.2);
+        }
+
+        .carousel-thumbnails {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            gap: 5px;
+        }
+
+        .carousel-thumb {
+            width: 50px;
+            height: 50px;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-thumb:hover, .carousel-thumb.active {
+            opacity: 1;
+            border-color: #667eea;
+        }
+
+        .carousel-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
@@ -578,7 +690,7 @@
                 id: 1, 
                 nombre: "Soporte Diadema Gamer Havit HY505", 
                 precio: 40000, 
-                imagen: "imagenes/hy505.jpg", 
+                imagenes: ["imagenes/hy505.jpg"],
                 descripcion: "Soporte para audífonos con base pesada y luces RGB",
                 marca: "HAVIT"
             },
@@ -586,7 +698,7 @@
                 id: 2, 
                 nombre: "Mouse USB Havit MS1027 Negro", 
                 precio: 40000, 
-                imagen: "imagenes/ms1027.jpg", 
+                imagenes: ["imagenes/ms1027.jpg"],
                 descripcion: "Mouse gamer con 6 botones y retroiluminación RGB",
                 marca: "HAVIT"
             },
@@ -594,7 +706,7 @@
                 id: 3, 
                 nombre: "Audífonos Diadema Redragon H120 Negro", 
                 precio: 60000, 
-                imagen: "imagenes/h120.jpg", 
+                imagenes: ["imagenes/h120.jpg"],
                 descripcion: "Audífonos gamer con micrófono retráctil",
                 marca: "REDRAGON"
             },
@@ -602,7 +714,7 @@
                 id: 4, 
                 nombre: "Mouse USB Havit MS1036 Negro", 
                 precio: 65000, 
-                imagen: "imagenes/ms1036.jpg", 
+                imagenes: ["imagenes/ms1036.jpg"],
                 descripcion: "Mouse gamer con sensor óptico de alta precisión",
                 marca: "HAVIT"
             },
@@ -610,7 +722,7 @@
                 id: 5, 
                 nombre: "Mouse USB Havit MS1029 Rosado", 
                 precio: 65000, 
-                imagen: "imagenes/ms1029.jpg", 
+                imagenes: ["imagenes/ms1029.jpg"],
                 descripcion: "Mouse gamer rosado con diseño ergonómico",
                 marca: "HAVIT"
             },
@@ -618,7 +730,7 @@
                 id: 6, 
                 nombre: "Audífonos Diadema Redragon Hylas H260", 
                 precio: 70000, 
-                imagen: "imagenes/h260.jpg", 
+                imagenes: ["imagenes/h260.jpg"],
                 descripcion: "Audífonos con sonido envolvente 7.1",
                 marca: "REDRAGON"
             },
@@ -626,7 +738,7 @@
                 id: 7, 
                 nombre: "Mouse USB Havit MS9595 Café", 
                 precio: 75000, 
-                imagen: "imagenes/ms9595.jpg", 
+                imagenes: ["imagenes/ms9595.jpg"],
                 descripcion: "Mouse gamer con cable trenzado resistente",
                 marca: "HAVIT"
             },
@@ -634,7 +746,7 @@
                 id: 8, 
                 nombre: "Mouse USB Redragon Griffin M607", 
                 precio: 80000, 
-                imagen: "imagenes/m607.jpg", 
+                imagenes: ["imagenes/m607.jpg"],
                 descripcion: "Mouse con chroma RGB y 10,000 DPI",
                 marca: "REDRAGON"
             },
@@ -642,7 +754,7 @@
                 id: 9, 
                 nombre: "Audífonos Diadema Redragon H120 RGB", 
                 precio: 80000, 
-                imagen: "imagenes/h120_rgb.jpg", 
+                imagenes: ["imagenes/h120_rgb.jpg"],
                 descripcion: "Audífonos con iluminación RGB personalizable",
                 marca: "REDRAGON"
             },
@@ -650,7 +762,7 @@
                 id: 10, 
                 nombre: "Mouse Gaming Esenses WG100", 
                 precio: 85000, 
-                imagen: "imagenes/wg100.jpg", 
+                imagenes: ["imagenes/wg100.jpg"],
                 descripcion: "Mouse alámbrico con 7 botones programables",
                 marca: "ESENSES"
             }
@@ -670,7 +782,7 @@
                 productCard.innerHTML = `
                     <div class="product-brand">${producto.marca}</div>
                     <div class="product-image">
-                        <img src="${producto.imagen}" alt="${producto.nombre}">
+                        ${createCarouselHTML(producto.imagenes, producto.id)}
                     </div>
                     <div class="product-info">
                         <h4>${producto.nombre}</h4>
@@ -682,6 +794,7 @@
                     </div>
                 `;
                 container.appendChild(productCard);
+                setTimeout(() => initCarousel(`carousel-${producto.id}`), 100);
             });
         }
 
